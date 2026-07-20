@@ -10,16 +10,18 @@ export function generateStaticParams() {
   return getAllArticles().map(a => ({ slug: a.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const a = getArticle(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const a = getArticle(slug);
   if (!a) return {};
   return { title: a.title, description: a.excerpt, openGraph: { title: a.title, description: a.excerpt, type: 'article', publishedTime: a.date } };
 }
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const a = getArticle(params.slug);
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const a = getArticle(slug);
   if (!a) notFound();
-  const { prev, next } = getAdjacent(params.slug);
+  const { prev, next } = getAdjacent(slug);
 
   return (
     <article>

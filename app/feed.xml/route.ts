@@ -1,4 +1,6 @@
 import { getAllArticles } from '@/lib/articles';
+
+export const dynamic = 'force-static';
 const SITE = 'https://desirepath.example.com';
 export function GET() {
   const items = getAllArticles().map(a => `<item><title><![CDATA[${a.title}]]></title><link>${SITE}/articles/${a.slug}</link><guid>${SITE}/articles/${a.slug}</guid><pubDate>${new Date(a.date).toUTCString()}</pubDate><description><![CDATA[${a.excerpt}]]></description></item>`).join('');
