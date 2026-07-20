@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: #0C1226;
+  color: #E9E2D0;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: #D0AC5C; color: #0C1226; }
+
+/* Editorial prose */
+.prose-editorial {
+  max-width: 42rem;
+  margin: 0 auto;
+}
+.prose-editorial p {
+  font-size: 1.075rem;
+  line-height: 1.9;
+  margin-top: 1.5rem;
+  color: rgba(233, 226, 208, 0.82);
+}
+.prose-editorial p:first-of-type { margin-top: 0; }
+
+.prose-editorial h2 {
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+  color: #E9C97E;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.prose-editorial strong {
+  color: #E9C97E;
+  font-weight: 600;
+}
+
+.prose-editorial a {
+  color: #E9C97E;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-editorial blockquote {
+  margin: 2.5rem auto;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(208, 172, 92, 0.2);
+  border-bottom: 1px solid rgba(208, 172, 92, 0.2);
+  text-align: center;
+  max-width: 34rem;
+}
+.prose-editorial blockquote p {
+  font-family: Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.65;
+  color: #F0E3C8;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Drop cap */
+.drop-cap::first-letter {
+  float: left;
+  font-family: Georgia, serif;
+  font-size: 4.5rem;
+  line-height: 0.75;
+  color: #E9C97E;
+  margin-right: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* Gold thread divider */
+.thread {
+  width: 1px;
+  height: 3.5rem;
+  background: rgba(208, 172, 92, 0.25);
+  margin: 0 auto;
+}
+
+/* Subtle fade-in */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.9s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #E9C97E;
+  outline-offset: 3px;
+}
