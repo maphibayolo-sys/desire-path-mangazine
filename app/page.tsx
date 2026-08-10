@@ -1,105 +1,173 @@
 import Link from 'next/link';
-import Image from 'next/image';
-import { getAllArticles } from '@/lib/articles';
+import { VOLUME_ONE_URL, VOLUME_ONE_DOI, DOI_URL, SUBJECT_AREAS } from '@/lib/site';
 
-export default function JourneyPage() {
-  const articles = getAllArticles();
-  const featured = articles.filter(a => a.art);
+const ONWARD = [
+  { href: '/volume-one', label: 'Volume One', note: 'The premiere edition, and where to read it.' },
+  { href: '/process', label: 'Process', note: 'The nine-stage journey every post followed.' },
+  { href: '/disclosure', label: 'Disclosure', note: 'A transparent AI-assisted creative workflow.' },
+  { href: '/about', label: 'About', note: 'How Desire Path came to be.' },
+];
 
+export default function Home() {
   return (
     <>
-      {/* HERO: Full-viewport heroine */}
-      <section className="relative flex min-h-screen flex-col justify-end overflow-hidden">
-        <Image src="/art/heroine.png" alt="The guide" fill className="object-cover object-[center_20%] brightness-[0.55]" priority />
-        <div className="absolute inset-0 bg-gradient-to-b from-abyss/30 via-transparent to-abyss" />
-        <div className="relative px-6 pb-20 md:px-12 md:pb-24 lg:max-w-3xl">
-          <p className="font-mono text-[9px] tracking-[0.4em] text-gold opacity-80">
-            OBSERVE ✦ QUESTION ✦ UNDERSTAND ✦ BUILD BETTER TOMORROWS
-          </p>
-          <h1 className="mt-6 font-display text-6xl leading-[0.95] text-parchment md:text-8xl">
-            Desire Path
-          </h1>
-          <p className="mt-3 font-display text-lg italic tracking-[0.5em] text-gold">
-            Follow the Clicks
-          </p>
-          <p className="mt-8 max-w-md text-[17px] leading-relaxed text-mist">
-            The most revealing part of any system is rarely the official process.
-            It is the behaviour happening around it.
-          </p>
-          <div className="mt-10 flex gap-4">
-            <Link href="/volume-one" className="bg-gold px-8 py-3.5 font-display text-sm tracking-wide text-abyss transition hover:bg-gold-bright">Begin the Journey</Link>
-            <Link href="/archive" className="border border-gold/30 px-8 py-3.5 font-display text-sm tracking-wide text-gold-bright transition hover:bg-abyss/50">The Archive</Link>
-          </div>
-        </div>
-      </section>
-
-      {/* EDITOR QUOTE */}
-      <section className="px-6 py-28 text-center md:py-36">
-        <div className="thread" />
-        <p className="mx-auto mt-10 max-w-lg font-display text-[1.65rem] italic leading-relaxed text-parchment">
-          &ldquo;Desire Path isn&apos;t just a name. It&apos;s a reminder that the most meaningful
-          outcomes rarely come from following the expected route.&rdquo;
+      {/* HERO — language from the Volume One cover */}
+      <section className="mx-auto max-w-5xl px-6 pb-28 pt-20 sm:pb-36 sm:pt-28">
+        <p className="font-sans text-[0.68rem] uppercase tracking-[0.3em] text-gold">
+          Mangazine · Volume 1 · Premiere Edition
         </p>
-        <p className="mt-8 font-mono text-[9px] tracking-[0.3em] text-gold-dim">
-          MAPHI BAYOLO ✦ EDITOR IN CHIEF
+        <h1 className="mt-8 font-display text-[clamp(2.75rem,11vw,7rem)] leading-[0.92] tracking-[-0.02em] text-paper">
+          DESIRE PATH
+        </h1>
+        <p className="mt-6 font-display text-xl text-paper/80 sm:text-2xl">
+          A different path. Better questions. Stronger futures.
         </p>
-        <div className="thread mt-10" />
-      </section>
-
-      {/* FEATURED SPREADS */}
-      {featured.map((a, i) => (
-        <section key={a.slug} className={`flex min-h-[500px] flex-col bg-deep md:flex-row ${i % 2 ? 'md:flex-row-reverse' : ''}`}>
-          <div className="relative min-h-[320px] flex-1 md:min-h-0">
-            <Image src={a.art!} alt={a.title} fill className="object-cover" />
-          </div>
-          <div className="flex flex-1 flex-col justify-center px-8 py-14 md:px-14">
-            <p className="font-mono text-[9px] tracking-[0.3em] text-gold">
-              PATH {String(a.number).padStart(2,'0')} ✦ {a.world.toUpperCase()}
-            </p>
-            <h2 className="mt-4 font-display text-3xl leading-tight text-parchment md:text-4xl">
-              {a.title}
-            </h2>
-            <p className="mt-5 text-base leading-relaxed text-mist">{a.excerpt}</p>
-            <p className="mt-6 font-mono text-[9px] tracking-[0.2em] text-gold-dim">
-              {new Date(a.date).toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' }).toUpperCase()} ✦ P.{a.pages}
-            </p>
-            <Link href={`/articles/${a.slug}`} className="mt-6 inline-block self-start border-b border-gold/30 pb-0.5 font-display text-sm text-gold-bright transition hover:border-gold">
-              Read this path →
-            </Link>
-          </div>
-        </section>
-      ))}
-
-      {/* CONTENTS SCROLL */}
-      <section className="mx-auto max-w-2xl px-6 py-24 md:py-32">
-        <p className="mb-14 text-center font-mono text-[9px] tracking-[0.4em] text-gold">
-          VOLUME ONE ✦ THE FULL JOURNEY
+        <p className="mt-8 max-w-reading font-sans text-[1.02rem] leading-relaxed text-graphite">
+          A business mangazine combining thought-provoking articles with
+          manga-inspired illustrations to explore the hidden behaviours shaping
+          work, technology, AI and modern life.
         </p>
-        {articles.map((a, i) => (
-          <Link key={a.slug} href={`/articles/${a.slug}`}
-            className="group flex items-baseline justify-between gap-6 border-b border-gold/[0.08] py-5 transition-all hover:pl-3"
+        <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4">
+          <a
+            href={VOLUME_ONE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-paper px-8 py-4 font-sans text-[0.72rem] uppercase tracking-[0.18em] text-ink transition-colors hover:bg-gold"
           >
-            <div className="flex items-baseline gap-5">
-              <span className="font-display text-3xl text-gold/20">{String(a.number).padStart(2,'0')}</span>
-              <div>
-                <span className="font-display text-lg text-parchment transition-colors group-hover:text-gold-bright">{a.title}</span>
-                <span className="mt-1 block font-mono text-[8px] tracking-[0.2em] text-gold-dim">{a.world.toUpperCase()}</span>
-              </div>
-            </div>
-            <span className="shrink-0 font-mono text-[9px] tracking-[0.15em] text-gold-dim">p.{a.pages}</span>
+            Read Volume One ↗
+          </a>
+          <Link
+            href="/about"
+            className="font-sans text-[0.72rem] uppercase tracking-[0.18em] text-graphite transition-colors hover:text-paper"
+          >
+            How Desire Path came to be →
           </Link>
-        ))}
+        </div>
+        <p className="mt-14 font-sans text-[0.7rem] uppercase tracking-[0.28em] text-gold/80">
+          Observe · Question · Understand · Build Better Tomorrows
+        </p>
       </section>
 
-      {/* CLOSING PHILOSOPHY */}
-      <section className="px-6 py-24 text-center">
-        <p className="mx-auto max-w-md font-display text-xl italic leading-relaxed text-parchment">
-          The most interesting part of any technology environment is rarely the documented process.
-          It&apos;s the behaviour happening around it.
+      <div className="mx-auto max-w-5xl px-6"><div className="rule" /></div>
+
+      {/* WHAT IS A DESIRE PATH — from Volume One pp.5-6 */}
+      <section aria-labelledby="what" className="mx-auto max-w-5xl px-6 py-24 sm:py-32">
+        <h2 id="what" className="font-display text-[clamp(1.9rem,4.5vw,3rem)] leading-tight text-paper">
+          What is a desire path?
+        </h2>
+        <div className="mt-10 max-w-reading space-y-6 font-sans text-[1.02rem] leading-relaxed text-graphite">
+          <p>
+            In urban design, a desire path is the unofficial route people
+            naturally create when the designed path doesn&apos;t match real
+            human behaviour. You see it when people walk across grass instead of
+            following the paved walkway. Nobody planned it. Nobody approved it.
+            But enough people made the same choice that the grass wore down and
+            a new path appeared.
+          </p>
+          <p>
+            Technology works the same way. Every workaround, every spreadsheet
+            built beside an enterprise system, every shadow AI tool adopted
+            without approval, every unofficial Slack channel, every bypassed
+            approval flow, every temporary process that has quietly run for
+            three years. They all point to the same thing: a gap between how
+            systems were designed and how humans actually operate.
+          </p>
+          <p>
+            A desire path is not automatically a failure of discipline. It can
+            be a failure of design.
+          </p>
+        </div>
+
+        <blockquote className="mt-14 border-l border-gold/40 pl-6 sm:pl-8">
+          <p className="font-display text-xl leading-snug text-paper sm:text-2xl">
+            The most revealing part of any technology environment is rarely the
+            official process. It&apos;s the behaviour happening around it.
+          </p>
+        </blockquote>
+
+        <p className="mt-10 font-sans text-[0.72rem] uppercase tracking-[0.28em] text-gold">
+          Follow the clicks. Find the path.
         </p>
-        <p className="mt-8 font-mono text-[9px] tracking-[0.4em] text-gold">
-          THAT IS WHERE THE OPERATIONAL TRUTH LIVES
-        </p>
+      </section>
+
+      <div className="mx-auto max-w-5xl px-6"><div className="rule" /></div>
+
+      {/* WHAT IT EXPLORES — subject areas from the cover */}
+      <section aria-labelledby="explores" className="mx-auto max-w-5xl px-6 py-24 sm:py-28">
+        <h2 id="explores" className="font-display text-[clamp(1.9rem,4.5vw,3rem)] leading-tight text-paper">
+          What it explores
+        </h2>
+        <dl className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+          {SUBJECT_AREAS.map((s) => (
+            <div key={s.name}>
+              <dt className="font-sans text-[0.68rem] uppercase tracking-[0.22em] text-gold">
+                {s.name}
+              </dt>
+              <dd className="mt-3 font-sans text-[0.98rem] leading-relaxed text-graphite">
+                {s.body}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      <div className="mx-auto max-w-5xl px-6"><div className="rule" /></div>
+
+      {/* ORIGIN — short, accurate */}
+      <section aria-labelledby="origin" className="mx-auto max-w-5xl px-6 py-24 sm:py-28">
+        <h2 id="origin" className="font-display text-[clamp(1.9rem,4.5vw,3rem)] leading-tight text-paper">
+          From LinkedIn to publication
+        </h2>
+        <div className="mt-10 max-w-reading space-y-6 font-sans text-[1.02rem] leading-relaxed text-graphite">
+          <p>
+            Desire Path began as weekly posts on LinkedIn. What began as ten
+            weekly reflections sparked conversations, challenged assumptions and
+            revealed patterns worth exploring deeper.
+          </p>
+          <p>
+            A collection of those posts became Desire Path Mangazine Volume 1,
+            published through Zenodo with a persistent DOI:{' '}
+            <a
+              href={DOI_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-paper underline decoration-gold/50 underline-offset-4 transition-colors hover:decoration-gold"
+            >
+              {VOLUME_ONE_DOI}
+            </a>
+            .
+          </p>
+        </div>
+        <Link
+          href="/about"
+          className="mt-10 inline-block font-sans text-[0.72rem] uppercase tracking-[0.18em] text-graphite transition-colors hover:text-paper"
+        >
+          Read the full story →
+        </Link>
+      </section>
+
+      <div className="mx-auto max-w-5xl px-6"><div className="rule" /></div>
+
+      {/* ONWARD */}
+      <section aria-labelledby="onward" className="mx-auto max-w-5xl px-6 py-24 sm:py-28">
+        <h2 id="onward" className="font-sans text-[0.68rem] uppercase tracking-[0.3em] text-gold">
+          Continue
+        </h2>
+        <ul className="mt-10 divide-y divide-gold/15 border-y border-gold/15">
+          {ONWARD.map((o) => (
+            <li key={o.href}>
+              <Link
+                href={o.href}
+                className="group flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 py-6"
+              >
+                <span className="font-display text-xl text-paper transition-colors group-hover:text-gold">
+                  {o.label}
+                </span>
+                <span className="font-sans text-[0.9rem] text-graphite">{o.note}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
     </>
   );

@@ -1,21 +1,55 @@
+import Link from 'next/link';
+import { VOLUME_ONE_URL, LINKEDIN_URL } from '@/lib/site';
+
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-gold/10">
-      <div className="mx-auto flex max-w-5xl flex-wrap justify-between gap-12 px-6 py-16 md:px-10">
+    <footer className="mx-auto max-w-5xl px-6 pb-16 pt-24">
+      <div className="rule" />
+      <div className="flex flex-wrap items-end justify-between gap-8 pt-10">
         <div>
-          <p className="font-display text-sm tracking-[0.15em] text-gold-bright">DESIRE PATH</p>
-          <p className="mt-1 font-display text-xs tracking-[0.4em] text-gold-dim italic">Follow the Clicks</p>
-          <p className="mt-5 max-w-[18rem] text-sm leading-relaxed text-mist">A publication about work, technology, AI, governance and modern life, told through systems thinking and manga-inspired illustration.</p>
+          <p className="font-display text-[0.95rem] tracking-[0.22em] text-paper">
+            DESIRE PATH
+          </p>
+          <p className="mt-2 font-sans text-[0.8rem] text-graphite">
+            A business mangazine
+          </p>
+          <p className="mt-1 font-sans text-[0.8rem] text-graphite">
+            Maphi Bayolo, Editor in Chief
+          </p>
         </div>
-        <div className="font-mono text-[9px] leading-[2.2] tracking-[0.15em] text-mist">
-          <p>Every click reveals a behaviour.</p>
-          <p>Every behaviour reveals a system.</p>
-          <p>Every system reveals incentives.</p>
-          <p>Every incentive reveals a story.</p>
-          <p>Every story reveals an opportunity to build something better.</p>
-        </div>
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 font-sans text-[0.72rem] uppercase tracking-[0.16em] text-graphite">
+          <li>
+            <a
+              href={VOLUME_ONE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-paper"
+            >
+              Volume One ↗
+            </a>
+          </li>
+          <li aria-hidden className="text-gold/40">·</li>
+          <li>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-paper"
+            >
+              LinkedIn ↗
+            </a>
+          </li>
+          <li aria-hidden className="text-gold/40">·</li>
+          <li>
+            <Link href="/contact" className="transition-colors hover:text-paper">
+              Contact
+            </Link>
+          </li>
+        </ul>
       </div>
-      <p className="pb-6 text-center font-mono text-[8px] tracking-[0.4em] text-gold-dim/40">DESIRE PATH MANGAZINE ✦ 2026</p>
+      <p className="mt-10 font-sans text-[0.72rem] text-graphite/70">
+        © 2026 Desire Path.
+      </p>
     </footer>
   );
 }

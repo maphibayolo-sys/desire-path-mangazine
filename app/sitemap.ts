@@ -1,9 +1,12 @@
 import type { MetadataRoute } from 'next';
-import { getAllArticles } from '@/lib/articles';
-const SITE = 'https://desirepath.example.com';
+import { SITE_URL } from '@/lib/site';
+
+const ROUTES = ['', '/volume-one', '/process', '/disclosure', '/about', '/contact'];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    ...['','/volume-one','/archive','/method','/about','/contact'].map(p => ({ url: `${SITE}${p}`, changeFrequency: 'monthly' as const })),
-    ...getAllArticles().map(a => ({ url: `${SITE}/articles/${a.slug}`, lastModified: a.date, changeFrequency: 'yearly' as const })),
-  ];
+  return ROUTES.map((path) => ({
+    url: `${SITE_URL}${path}`,
+    changeFrequency: 'monthly' as const,
+    priority: path === '' ? 1 : 0.8,
+  }));
 }

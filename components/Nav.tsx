@@ -1,43 +1,63 @@
 'use client';
+
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const LINKS = [
-  { href: '/', label: 'The Journey' },
   { href: '/volume-one', label: 'Volume One' },
-  { href: '/archive', label: 'Archive' },
-  { href: '/method', label: 'The Method' },
+  { href: '/process', label: 'Process' },
+  { href: '/disclosure', label: 'Disclosure' },
   { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
 ];
 
 export default function Nav() {
-  const p = usePathname();
-  const [s, setS] = useState(false);
-  const [o, setO] = useState(false);
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const h = () => setS(window.scrollY > 60);
-    window.addEventListener('scroll', h, { passive: true });
-    return () => window.removeEventListener('scroll', h);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${s ? 'bg-abyss/92 backdrop-blur-md' : ''}`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10">
-        <Link href="/" className="font-display text-sm tracking-[0.15em] text-gold-bright">DESIRE PATH</Link>
-        <nav className="hidden gap-8 md:flex">
-          {LINKS.map(l => (
-            <Link key={l.href} href={l.href}
-              className={`font-mono text-[9px] tracking-[0.2em] uppercase transition-colors ${p === l.href ? 'text-gold-bright' : 'text-mist hover:text-gold-bright'}`}
-            >{l.label}</Link>
-          ))}
-        </nav>
-        <button className="font-mono text-xs tracking-widest text-gold md:hidden" onClick={() => setO(!o)}>{o ? 'CLOSE' : 'MENU'}</button>
-      </div>
-      {o && (
-        <nav className="border-t border-gold/10 px-6 pb-6 md:hidden">
-          {LINKS.map(l => <Link key={l.href} href={l.href} onClick={() => setO(false)} className="block py-3 font-mono text-xs tracking-wide text-cream">{l.label.toUpperCase()}</Link>)}
-        </nav>
-      )}
+    <header
+      className={`sticky top-0 z-50 transition-colors duration-300 ${
+        scrolled ? 'bg-ink/95 backdrop-blur-sm' : 'bg-ink'
+      }`}
+    >
+      <nav
+        aria-label="Primary"
+        className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-6 gap-y-3 px-6 py-5"
+      >
+        <Link
+          href="/"
+          className="font-display text-[0.95rem] tracking-[0.22em] text-paper"
+        >
+          DESIRE PATH
+        </Link>
+        <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 sm:gap-x-7">
+          {LINKS.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <li key={l.href}>
+                <Link
+                  href={l.href}
+                  aria-current={active ? 'page' : undefined}
+                  className={`font-sans text-[0.68rem] uppercase tracking-[0.18em] transition-colors hover:text-paper ${
+                    active ? 'text-paper' : 'text-graphite'
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
     </header>
   );
 }
